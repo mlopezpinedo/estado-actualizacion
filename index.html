@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seguimiento de actualización de comentarios</title>
+<style>
+  :root{--ind:#2e2a8c;--azl:#e8ecf6;--bd:#1f1f1f;--okbg:#d9f2dc;--ok:#1e7d32;--pebg:#fddede;--pe:#c62828}
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;color:#111;font:14px/1.3 Arial,Helvetica,sans-serif}
+  .wrap{max-width:620px;margin:0 auto;padding:16px}
+  h1{margin:0;background:var(--ind);color:#fff;font-size:19px;padding:14px 14px;letter-spacing:.2px}
+  .sub{text-align:center;padding:6px;color:#333}
+  table{border-collapse:collapse;width:100%}
+  .res{margin:10px 0 14px}
+  .res td{border:1px solid var(--bd);padding:4px 6px;font-weight:700}
+  .res td:first-child{background:var(--azl);width:65%}
+  .res td:last-child{text-align:center;font-size:16px}
+  .lst thead th{background:var(--ind);color:#fff;padding:5px;border:1px solid var(--ind)}
+  .lst td{border:1px solid #cfcfcf;padding:0 6px;height:30px}
+  .lst td:first-child{width:65%}
+  .lst td.e{text-align:center;font-size:13px;border-color:#fff}
+  .Actualizado{background:var(--okbg);color:var(--ok)}
+  .Pendiente{background:var(--pebg);color:var(--pe)}
+  .pie{color:#666;font-size:12px;margin-top:10px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>SEGUIMIENTO DE ACTUALIZACIÓN DE COMENTARIOS</h1>
+  <div class="sub">Control compartido de cumplimiento</div>
+  <table class="res">
+    <tr><td>Total de responsables</td><td id="kT">–</td></tr>
+    <tr><td>Actualizados</td><td id="kA">–</td></tr>
+    <tr><td>Pendientes</td><td id="kP">–</td></tr>
+  </table>
+  <table class="lst">
+    <thead><tr><th>Nombres y apellidos</th><th>Estado</th></tr></thead>
+    <tbody id="tb"></tbody>
+  </table>
+  <div class="pie" id="pie"></div>
+</div>
+
+<script>
+/* ===== PARA ACTUALIZAR: cambia 'Pendiente' por 'Actualizado' (o al revés) y guarda. ===== */
+const DATOS = [
+  ['Barboza Cueva, Segundo Eduardo','Pendiente'],
+  ['Condori Pablo, Alexis Gabriel','Actualizado'],
+  ['Cubas Carrillo, Ronald','Pendiente'],
+  ['Díaz Cornejo, José Luis','Pendiente'],
+  ['Garnique Llontop, Henry','Pendiente'],
+  ['Guerrero Cruz, José Alejandro','Pendiente'],
+  ['Guevara Reque, Josué Jesús','Pendiente'],
+  ['Horna Saucedo, Ubaldo','Actualizado'],
+  ['Labrín Carrasco, Willian Sebastian','Pendiente'],
+  ['Loyola Almonacid, Niels Efraín','Actualizado'],
+  ['Marín León, Rogger Fabián','Pendiente'],
+  ['Ruiz Brenis, Marcos Fernando','Pendiente'],
+  ['Aranda Solis, Jackson Grover','Pendiente']
+];
+const FECHA_ACTUALIZACION = '28/10/2026';
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+
+function pintar(filas, fuente){
+  const a = filas.filter(f=>f[1]==="Actualizado").length;
+  $("kT").textContent = filas.length;
+  $("kA").textContent = a;
+  $("kP").textContent = filas.length - a;
+  $("tb").innerHTML = filas.map(([n,e]) =>
+    `<tr><td>${esc(n)}</td><td class="e ${esc(e)}">${esc(e)}</td></tr>`).join("");
+  $("pie").textContent = fuente;
+}
+
+pintar(DATOS, "Actualizado al " + FECHA_ACTUALIZACION);
+</script>
+</body>
+</html>
